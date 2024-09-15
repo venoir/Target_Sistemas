@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <limits.h> // Para usar INT_MAX e INT_MIN
+
+// Função para calcular a média mensal ignorando dias sem faturamento
+double calcular_media(int faturamento[], int tamanho) {
+    double soma = 0.0;
+    int dias_com_faturamento = 0;
+
+    for (int i = 0; i < tamanho; i++) {
+        if (faturamento[i] > 0) { // Ignorar dias sem faturamento
+            soma += faturamento[i];
+            dias_com_faturamento++;
+        }
+    }
+    
+    // Retorna a média apenas se houve dias com faturamento
+    return dias_com_faturamento > 0 ? soma / dias_com_faturamento : 0;
+}
+
+int main() {
+    // Simulação dos dados de faturamento diário
+    // Um valor zero (0) representa um dia sem faturamento
+    int faturamento[] = {0, 220, 180, 0, 150, 0, 300, 400, 0, 500, 200, 0, 0, 350, 250, 0, 0, 180, 0, 210, 0, 380, 0, 0, 400, 150, 0, 0, 100, 500};
+    int tamanho = sizeof(faturamento) / sizeof(faturamento[0]);
+
+    int menor_faturamento = INT_MAX;
+    int maior_faturamento = INT_MIN;
+    int dias_acima_da_media = 0;
+
+    // Calcular o menor e o maior faturamento
+    for (int i = 0; i < tamanho; i++) {
+        if (faturamento[i] > 0) { // Ignorar dias sem faturamento
+            if (faturamento[i] < menor_faturamento) {
+                menor_faturamento = faturamento[i];
+            }
+            if (faturamento[i] > maior_faturamento) {
+                maior_faturamento = faturamento[i];
+            }
+        }
+    }
+
+    // Calcular a média mensal
+    double media_mensal = calcular_media(faturamento, tamanho);
+
+    // Contar os dias em que o faturamento foi superior à média mensal
+    for (int i = 0; i < tamanho; i++) {
+        if (faturamento[i] > media_mensal) {
+            dias_acima_da_media++;
+        }
+    }
+
+    // Exibir os resultados
+    printf("Menor faturamento: %d\n", menor_faturamento);
+    printf("Maior faturamento: %d\n", maior_faturamento);
+    printf("Número de dias com faturamento acima da média mensal: %d\n", dias_acima_da_media);
+
+    return 0;
+}
