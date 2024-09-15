@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h> // Para usar strlen()
+
+int main() {
+    // Definição da string
+    char str[100]; // Limite máximo de 100 caracteres para a string
+
+    // Solicita ao usuário que informe a string
+    printf("Informe uma string: ");
+    fgets(str, sizeof(str), stdin); // Lê a string incluindo espaços
+
+    // Remove o caractere de nova linha '\n' que fgets pode adicionar
+    str[strcspn(str, "\n")] = '\0';
+
+    // Variáveis para controle
+    int len = strlen(str); // Comprimento da string
+    char temp; // Variável temporária para troca de caracteres
+
+    // Processo de inversão
+    for (int i = 0; i < len / 2; i++) {
+        // Troca os caracteres das extremidades
+        temp = str[i];
+        str[i] = str[len - 1 - i];
+        str[len - 1 - i] = temp;
+    }
+
+    // Exibe a string invertida
+    printf("String invertida: %s\n", str);
+
+    return 0;
+}
